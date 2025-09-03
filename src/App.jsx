@@ -1,34 +1,44 @@
 import React, { useState } from 'react';
-import Home from './components/Home';
-import Tentang from './components/Tentang';
-import Kontak from './components/Kontak';
+
+// Impor semua komponen yang akan kita gunakan
+import Home from './components/Home.jsx';
+import Tentang from './components/Tentang.jsx'; // DIUBAH: Sekarang mengimpor Tentang.jsx
+import Kontak from './components/Kontak.jsx';
+import Footer from './components/Footer.jsx';
 
 function App() {
-  // State untuk melacak halaman yang sedang aktif
   const [halamanAktif, setHalamanAktif] = useState('home');
+  const [tema, setTema] = useState('terang');
 
-  // Fungsi untuk merender komponen berdasarkan state halamanAktif
+  const toggleTema = () => {
+    setTema(tema === 'terang' ? 'gelap' : 'terang');
+  };
+
   const renderHalaman = () => {
-    if (halamanAktif === 'home') {
-      return <Home />;
-    } else if (halamanAktif === 'tentang') {
-      return <Tentang />;
-    } else if (halamanAktif === 'kontak') {
+    if (halamanAktif === 'tentang') {
+      return <Tentang />; // DIUBAH: Sekarang merender komponen Tentang
+    }
+    if (halamanAktif === 'kontak') {
       return <Kontak />;
     }
+    return <Home />;
   };
 
   return (
-    <div>
+    <div className={`app-container ${tema}`}>
       <nav>
         <button onClick={() => setHalamanAktif('home')}>Home</button>
         <button onClick={() => setHalamanAktif('tentang')}>Tentang</button>
         <button onClick={() => setHalamanAktif('kontak')}>Kontak</button>
+        <button onClick={toggleTema}>Ganti Tema</button>
       </nav>
       <hr />
+      
       <main>
         {renderHalaman()}
       </main>
+      
+      <Footer />
     </div>
   );
 }
